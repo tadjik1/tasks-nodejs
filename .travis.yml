@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - 10.13.0
 
-script: node scripts/run_test
+script: node scripts/run_test_ci
 
 notifications:
   webhooks:
