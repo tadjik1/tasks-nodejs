@@ -7,8 +7,8 @@
 строки. 
 Например,
 ```text
-setImmediate
-Promise1
+James
+Michael
 ```
 
 Код для запуска находится в файле index.js:
