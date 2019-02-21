@@ -1,7 +1,7 @@
 # Стрим с лимитом передачи данных (Решение)
 
 Для решения этой задачи нам надо в первую очередь посмотреть 
-[раздел документации](https://nodejs.org/dist/latest-v11.x/docs/api/stream.html#stream_implementing_a_transform_stream), 
+[раздел документации](https://nodejs.org/docs/latest/api/stream.html#stream_implementing_a_transform_stream), 
 который описывает процесс создания собственных классов Transform стримов. Наша задача сводится к тому, чтобы 
 реализовать метод `_tranform`, который будет вызываться каждый раз, когда очередная порция данных будет передаваться 
 через стрим. 
