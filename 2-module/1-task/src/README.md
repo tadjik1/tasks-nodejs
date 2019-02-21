@@ -19,7 +19,7 @@ stream.Transform и принимает помимо обычных параме�
 const LimitSizeStream = require('./LimitSizeStream');
 const fs = require('fs');
 
-const limitedStream = new LimitSizeStream({limit: 10}); // 8 байт
+const limitedStream = new LimitSizeStream({limit: 8}); // 8 байт
 const outStream = fs.createWriteStream('out.txt');
 
 limitedStream.pipe(outStream);
