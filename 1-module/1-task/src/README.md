@@ -19,9 +19,8 @@ const intervalId = setInterval(() => {
 }, 10);
 
 setTimeout(() => {
-  console.log('John');
-  
   const promise = new Promise((resolve) => {
+    console.log('Richard');
     resolve('Robert');
   });
   
@@ -35,29 +34,7 @@ setTimeout(() => {
         clearInterval(intervalId);
       }, 10);
     });
+  
+  console.log('John');
 }, 10);
-
-const promise = new Promise((resolve) => {
-  resolve('William');
-});
-
-promise
-  .then((value) => {
-    console.log(value);
-    return 'David';
-  })
-  .then((value) => {
-    console.log(value);
-    
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        console.log('Joseph');
-
-        resolve('Richard');
-      }, 10);
-    });
-  })
-  .then((value) => {
-    console.log(value);
-  });
 ```
