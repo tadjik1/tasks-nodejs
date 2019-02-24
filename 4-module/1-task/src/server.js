@@ -15,14 +15,6 @@ server.on('request', (req, res) => {
       
       break;
 
-    case 'POST':
-      
-      break;
-
-    case 'DELETE':
-      
-      break;
-    
     default:
       res.statusCode = 501;
       res.end('Not implemented');

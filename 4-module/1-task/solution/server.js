@@ -3,8 +3,6 @@ const http = require('http');
 const path = require('path');
 
 const sendFile = require('./sendFile');
-const receiveFile = require('./receiveFile');
-const removeFile = require('./removeFile');
 
 const server = new http.Server();
 
@@ -26,28 +24,6 @@ server.on('request', (req, res) => {
       
       break;
 
-    case 'POST':
-      if (!filepath) {
-        res.statusCode = 404;
-        res.end('File not found');
-        return;
-      }
-  
-      receiveFile(filepath, req, res);
-
-      break;
-
-    case 'DELETE':
-      if (!filepath) {
-        res.statusCode = 404;
-        res.end('File not found');
-        return;
-      }
-  
-      removeFile(filepath, res);
-      
-      break;
-    
     default:
       res.statusCode = 501;
       res.end('Not implemented');
