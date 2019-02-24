@@ -12,7 +12,7 @@ function Reporter(runner) {
       description: test.title,
       success: true,
       suite: test.parent.titlePath(),
-      time: test.duration
+      time: test.duration,
     });
   });
 
@@ -22,7 +22,7 @@ function Reporter(runner) {
       description: test.title,
       success: false,
       suite: test.parent.titlePath(),
-      time: test.duration
+      time: test.duration,
     });
   });
 

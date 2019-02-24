@@ -7,17 +7,17 @@ setTimeout(() => {
     console.log('Richard');
     resolve('Robert');
   });
-  
+
   promise
-    .then((value) => {
-      console.log(value);
-      
-      setTimeout(() => {
-        console.log('Michael');
-        
-        clearInterval(intervalId);
-      }, 10);
-    });
-  
+      .then((value) => {
+        console.log(value);
+
+        setTimeout(() => {
+          console.log('Michael');
+
+          clearInterval(intervalId);
+        }, 10);
+      });
+
   console.log('John');
 }, 10);

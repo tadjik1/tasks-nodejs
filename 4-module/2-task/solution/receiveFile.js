@@ -12,16 +12,16 @@ module.exports = function receiveFile(filepath, req, res) {
   const limitStream = new LimitSizeStream({limit: 1e6});
 
   req
-    .pipe(limitStream)
-    .pipe(writeStream);
+      .pipe(limitStream)
+      .pipe(writeStream);
 
-  limitStream.on('error', err => {
+  limitStream.on('error', (err) => {
     if (err.code === 'LIMIT_EXCEEDED') {
       res.statusCode = 413;
       res.setHeader('Connection', 'close');
       res.end('File is too big');
 
-      fs.unlink(filepath, err => {});
+      fs.unlink(filepath, (err) => {});
       return;
     }
 
@@ -31,33 +31,32 @@ module.exports = function receiveFile(filepath, req, res) {
     res.setHeader('Connection', 'close');
     res.end('Internal server error');
 
-    fs.unlink(filepath, err => {});
+    fs.unlink(filepath, (err) => {});
   });
 
   writeStream
-    .on('error', err => {
-      if (err.code === 'EEXIST') {
-        res.statusCode = 409;
-        res.end('File exists');
-        return;
-      }
+      .on('error', (err) => {
+        if (err.code === 'EEXIST') {
+          res.statusCode = 409;
+          res.end('File exists');
+          return;
+        }
 
-      console.error(err);
+        console.error(err);
 
-      res.statusCode = 500;
-      res.setHeader('Connection', 'close');
-      res.end('Internal server error');
+        res.statusCode = 500;
+        res.setHeader('Connection', 'close');
+        res.end('Internal server error');
 
-      fs.unlink(filepath, err => {});
-    })
-    .on('close', () => {
-      res.statusCode = 201;
-      res.end('File created');
-    });
+        fs.unlink(filepath, (err) => {});
+      })
+      .on('close', () => {
+        res.statusCode = 201;
+        res.end('File created');
+      });
 
   res.on('close', () => {
     if (res.finished) return;
-    fs.unlink(filepath, err => {});
+    fs.unlink(filepath, (err) => {});
   });
-
 };

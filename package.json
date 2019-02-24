@@ -4,13 +4,16 @@
   "description": "Node.JS Course Materials",
   "scripts": {
     "test": "mocha --reporter=reporter.js *module/*task/**/*.test.js",
-    "test:local": "mocha --reporter=spec *module/*task/**/*.test.js"
+    "test:local": "mocha --reporter=spec *module/*task/**/*.test.js",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "Sergey Zelenov",
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.2.0",
+    "eslint": "^5.14.1",
+    "eslint-config-google": "^0.12.0",
     "mocha": "^5.2.0"
   },
   "dependencies": {

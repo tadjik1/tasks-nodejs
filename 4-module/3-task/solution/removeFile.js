@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 module.exports = function removeFile(filepath, res) {
-  fs.unlink(filepath, err => {
+  fs.unlink(filepath, (err) => {
     if (err) {
       if (err.code === 'ENOENT') {
         res.statusCode = 404;
@@ -17,4 +17,4 @@ module.exports = function removeFile(filepath, res) {
       res.end('Ok');
     }
   });
-}
+};
