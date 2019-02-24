@@ -1,7 +1,7 @@
 # Чат на Koa.js
 
 В этом задании вам необходимо будет реализовать простой чат на koa.js, используя технологию 
-[long pooling](http://learn.javascript.ru/xhr-longpoll).
+[long polling](http://learn.javascript.ru/xhr-longpoll).
 
 
 Суть технологии достаточно проста: клиент делает запрос за получением новых сообщений, а сервер этот запрос 
