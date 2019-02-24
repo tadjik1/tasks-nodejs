@@ -1,3 +1,4 @@
-# Стримы
+# Стримы в Node.JS
 
-Node.JS Streams
+Материалы по теме стримов:
+1. https://nodejs.org/dist/latest/docs/api/stream.html (английский, официальная документация)
