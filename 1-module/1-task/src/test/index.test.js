@@ -7,7 +7,7 @@ describe('1-module-1-task', () => {
   describe('Порядок вывода сообщений', () => {
     it('файл с решением должен быть в папке с задачей', () => {
       const isExists = fs.existsSync(path.join(__dirname, '../solution.txt'));
-      expect(isExists).to.be.eql(true);
+      expect(isExists).to.be.true;
     });
 
     it('порядок вывода совпадает', () => {
@@ -18,7 +18,7 @@ describe('1-module-1-task', () => {
         encoding: 'utf-8',
       });
 
-      expect(solution.trim()).to.be.eql(output.trim());
+      expect(solution.trim()).to.equal(output.trim());
     });
   });
 });

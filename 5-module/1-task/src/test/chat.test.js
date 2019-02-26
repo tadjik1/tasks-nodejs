@@ -46,7 +46,50 @@ describe('5-module-1-task', () => {
         const messages = await subscribers;
 
         messages.forEach((msg) => {
-          expect(msg).to.eql(message);
+          expect(msg).to.equal(message);
+        });
+      });
+
+      it('если нет сообщения - запрос должен игнорироваться', async () => {
+        const message = 'text';
+
+        const subscribers = Promise.all([
+          request({
+            method: 'GET',
+            url: 'http://127.0.0.1:3000/subscribe',
+            timeout: 500,
+          }),
+          request({
+            method: 'GET',
+            url: 'http://127.0.0.1:3000/subscribe',
+            timeout: 500,
+          }),
+        ]);
+
+        await sleep(50);
+
+        await request({
+          method: 'POST',
+          url: 'http://127.0.0.1:3000/publish',
+          json: true,
+          body: {},
+        });
+
+        await sleep(50);
+
+        await request({
+          method: 'POST',
+          url: 'http://127.0.0.1:3000/publish',
+          json: true,
+          body: {
+            message,
+          },
+        });
+
+        const messages = await subscribers;
+
+        messages.forEach((msg) => {
+          expect(msg).to.equal(message);
         });
       });
     });

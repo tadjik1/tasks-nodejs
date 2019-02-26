@@ -1,6 +1,6 @@
 const server = require('../server');
 const request = require('request');
-const assert = require('assert');
+const expect = require('chai').expect;
 const fse = require('fs-extra');
 const path = require('path');
 const http = require('http');
@@ -37,8 +37,8 @@ describe('4-module-1-task', () => {
 
           const newMtime = fse.statSync(path.join(filesFolder, 'small.png')).mtime;
 
-          assert.deepStrictEqual(mtime, newMtime);
-          assert.strictEqual(response.statusCode, 409);
+          expect(mtime).to.eql(newMtime);
+          expect(response.statusCode).to.equal(409);
           done();
         });
 
@@ -58,8 +58,8 @@ describe('4-module-1-task', () => {
 
           const newMtime = fse.statSync(path.join(filesFolder, 'small.png')).mtime;
 
-          assert.deepStrictEqual(mtime, newMtime);
-          assert.strictEqual(response.statusCode, 409);
+          expect(mtime).to.eql(newMtime);
+          expect(response.statusCode).to.equal(409);
           done();
         });
 
@@ -72,12 +72,9 @@ describe('4-module-1-task', () => {
             (error, response, body) => {
               if (error) return done(error);
 
-              assert.strictEqual(response.statusCode, 413);
+              expect(response.statusCode).to.equal(413);
 
-              assert.strictEqual(
-                  fse.existsSync(path.join(filesFolder, 'big.png')),
-                  false
-              );
+              expect(fse.existsSync(path.join(filesFolder, 'big.png'))).to.be.false;
 
               done();
             });
@@ -95,9 +92,9 @@ describe('4-module-1-task', () => {
         const req = request.post('http://localhost:3001/small.png', (error, response, body) => {
           if (error) return done(error);
 
-          assert.strictEqual(response.statusCode, 201);
+          expect(response.statusCode).to.equal(201);
 
-          assert.ok(fse.existsSync(path.join(filesFolder, 'small.png')));
+          expect(fse.existsSync(path.join(filesFolder, 'small.png'))).to.be.true;
           done();
         });
 
@@ -113,10 +110,7 @@ describe('4-module-1-task', () => {
         req.on('error', (err) => {
           if (err.code !== 'ECONNRESET') return done(err);
 
-          assert.strictEqual(
-              fse.existsSync(path.join(filesFolder, 'example.txt')),
-              false
-          );
+          expect(fse.existsSync(path.join(filesFolder, 'example.txt'))).to.be.false;
           done();
         });
 

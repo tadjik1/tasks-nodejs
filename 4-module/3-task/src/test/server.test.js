@@ -1,6 +1,6 @@
 const server = require('../server');
 const request = require('request');
-const assert = require('assert');
+const expect = require('chai').expect;
 const fse = require('fs-extra');
 const path = require('path');
 
@@ -33,12 +33,8 @@ describe('4-module-1-task', () => {
         request.delete('http://localhost:3001/small.png', (error, response, body) => {
           if (error) return done(error);
 
-          assert.strictEqual(response.statusCode, 200);
-
-          assert.strictEqual(
-              fse.existsSync(path.join(filesFolder, 'small.png')),
-              false
-          );
+          expect(response.statusCode).to.equal(200);
+          expect(fse.existsSync(path.join(filesFolder, 'small.png'))).to.be.false;
 
           done();
         });
@@ -48,7 +44,7 @@ describe('4-module-1-task', () => {
         request.delete('http://localhost:3001/small.png', (error, response, body) => {
           if (error) return done(error);
 
-          assert.strictEqual(response.statusCode, 404);
+          expect(response.statusCode).to.equal(404);
           done();
         });
       });

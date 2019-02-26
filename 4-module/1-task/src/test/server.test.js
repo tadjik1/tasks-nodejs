@@ -1,6 +1,6 @@
 const server = require('../server');
 const request = require('request');
-const assert = require('assert');
+const expect = require('chai').expect;
 const fse = require('fs-extra');
 const path = require('path');
 
@@ -35,8 +35,8 @@ describe('4-module-1-task', () => {
         request.get('http://localhost:3001/index.js', (err, response, body) => {
           if (err) return done(err);
 
-          assert.strictEqual(response.statusCode, 200);
-          assert.strictEqual(body, content.toString('utf-8'));
+          expect(response.statusCode).to.equal(200);
+          expect(body).to.equal(content.toString('utf-8'));
           done();
         });
       });
@@ -45,7 +45,7 @@ describe('4-module-1-task', () => {
         request.get('http://localhost:3001/not_exists.png', (error, response, body) => {
           if (error) return done(error);
 
-          assert.strictEqual(response.statusCode, 404);
+          expect(response.statusCode).to.equal(404);
           done();
         });
       });
@@ -54,7 +54,7 @@ describe('4-module-1-task', () => {
         request.get('http://localhost:3001/nested/path', (error, response, body) => {
           if (error) return done(error);
 
-          assert.strictEqual(response.statusCode, 400);
+          expect(response.statusCode).to.equal(400);
           done();
         });
       });
