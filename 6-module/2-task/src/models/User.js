@@ -4,11 +4,12 @@ const schema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: 'Такой email уже существует',
     validate: [{
       validator: (value) => {
         return /^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(value);
       },
+      message: 'Некорректный email',
     }],
     lowercase: true,
     trim: true,

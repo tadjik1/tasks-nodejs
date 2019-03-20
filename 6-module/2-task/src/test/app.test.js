@@ -42,7 +42,7 @@ describe('6-module-2-task', () => {
       existingUser = await User.create(existingUserData);
     });
 
-    describe('POST /users', async function() {
+    describe('POST /users', function() {
       it('creates a user', async function() {
         const response = await request({
           method: 'post',
@@ -51,8 +51,8 @@ describe('6-module-2-task', () => {
         });
         const user = await User.findById(response.body._id);
 
-        assert.strictEqual(response.body.displayName, user.displayName);
-        assert.strictEqual(response.body.email, user.email);
+        expect(response.body.displayName).to.equal(user.displayName);
+        expect(response.body.email).to.equal(user.email);
       });
 
       it('возвращается ошибка если email уже занят', async function() {
@@ -75,11 +75,73 @@ describe('6-module-2-task', () => {
           },
         });
         expect(response.statusCode).to.equal(400);
-        expect(response.body.errors.email).to.equal('Некорректный email.');
+        expect(response.body.errors.email).to.equal('Некорректный email');
       });
     });
 
-    describe('GET /user/:userById', async function() {
+    describe('PATCH /users/:id', () => {
+      it('изменяет пользователя с заданным id', async () => {
+        const response = await request({
+          method: 'patch',
+          uri: getURL(`/users/${existingUser.id}`),
+          body: {
+            email: 'newemail@mail.com',
+            displayName: 'newName',
+          },
+        });
+
+        const user = await User.findById(response.body._id);
+
+        expect(response.body.displayName).to.equal(user.displayName);
+        expect(response.body.email).to.equal(user.email);
+      });
+
+      it('служебные поля игнорируются', async () => {
+        await request({
+          method: 'patch',
+          uri: getURL(`/users/${existingUser.id}`),
+          body: {
+            _id: '111',
+            createdAt: new Date(),
+          },
+        });
+
+        const user = await User.findById(existingUser.id);
+
+        expect(user.id).to.equal(existingUser.id);
+        expect(user.createdAt).to.deep.equal(existingUser.createdAt);
+      });
+
+      it('возвращается 400 если email невалидный', async () => {
+        const response = await request({
+          method: 'patch',
+          uri: getURL(`/users/${existingUser.id}`),
+          body: {
+            email: 'invalid',
+          },
+        });
+
+        expect(response.statusCode).to.equal(400);
+        expect(response.body.errors.email).to.equal('Некорректный email');
+      });
+
+      it('возвращается 400 если email уже занят', async () => {
+        const newUser = await User.create(newUserData);
+
+        const response = await request({
+          method: 'patch',
+          uri: getURL(`/users/${existingUser.id}`),
+          body: {
+            email: newUser.email,
+          },
+        });
+
+        expect(response.statusCode).to.equal(400);
+        expect(response.body.errors.email).to.equal('Такой email уже существует');
+      });
+    });
+
+    describe('GET /users/:userById', function() {
       it('возвращает пользователя по id', async function() {
         const response = await request.get(getURL('/users/' + existingUser._id));
 
@@ -100,7 +162,7 @@ describe('6-module-2-task', () => {
       });
     });
 
-    describe('DELETE /user/:userById', async function() {
+    describe('DELETE /users/:userById', function() {
       it('удаляет пользователя из базы', async function() {
         const response = await request.del(getURL('/users/' + existingUser._id));
         const user = await User.findById(existingUser._id);

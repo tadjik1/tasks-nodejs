@@ -8,14 +8,14 @@ app.use(require('koa-bodyparser')());
 const Router = require('koa-router');
 const router = new Router();
 
-let clients = [];
+const clients = new Set();
 
 router.get('/subscribe', async (ctx, next) => {
   const message = await new Promise((resolve, reject) => {
-    clients.push(resolve);
+    clients.add(resolve);
 
     ctx.res.on('close', function() {
-      clients.splice(clients.indexOf(resolve), 1);
+      clients.remove(resolve);
       resolve();
     });
   });
@@ -34,7 +34,7 @@ router.post('/publish', async (ctx, next) => {
     resolve(message);
   });
 
-  clients = [];
+  clients.clear();
 
   ctx.body = 'ok';
 });

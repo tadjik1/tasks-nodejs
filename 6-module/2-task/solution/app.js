@@ -1,9 +1,11 @@
 const Koa = require('koa');
-const app = new Koa();
+const _ = require('lodash');
 const Router = require('koa-router');
 const User = require('./models/User');
-const loadUserById = require('./libs/loadUserById');
+const validateId = require('./libs/validateId');
 const handleValidationErrors = require('./libs/validationErrors');
+
+const app = new Koa();
 
 app.use(require('koa-logger')());
 app.use(require('koa-bodyparser')());
@@ -30,16 +32,25 @@ router.get('/users', async (ctx) => {
   ctx.body = await User.find({});
 });
 
-router.get('/users/:id', loadUserById, async (ctx) => {
-  ctx.body = ctx.userById;
+router.get('/users/:id', validateId, async (ctx) => {
+  const user = await User.findById(ctx.params.id);
+
+  if (!user) {
+    ctx.throw(404);
+  }
+
+  ctx.body = user;
 });
 
-router.patch('/users/:id', loadUserById, handleValidationErrors, async (ctx) => {
+router.patch('/users/:id', validateId, handleValidationErrors, async (ctx) => {
   const fields = _.pick(ctx.request.body, ['displayName', 'email']);
-  Object.assign(ctx.userById, fields);
-  await ctx.userById.save();
 
-  ctx.body = ctx.userById;
+  const user = await User.findByIdAndUpdate(ctx.params.id, fields, {
+    runValidators: true,
+    new: true,
+  });
+
+  ctx.body = user;
 });
 
 router.post('/users', handleValidationErrors, async (ctx) => {
@@ -47,10 +58,10 @@ router.post('/users', handleValidationErrors, async (ctx) => {
   ctx.body = await User.create(fields);
 });
 
-router.delete('/users/:id', loadUserById, async (ctx) => {
-  await ctx.userById.remove();
-
-  ctx.body = 'ok';
+router.delete('/users/:id', validateId, async (ctx) => {
+  const user = await User.findByIdAndRemove(ctx.params.id);
+  if (!user) ctx.throw(404);
+  ctx.body = user;
 });
 
 app.use(router.routes());

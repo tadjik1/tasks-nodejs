@@ -42,21 +42,27 @@ describe('4-module-1-task', () => {
       });
 
       it('если файла нет - отдается 404', (done) => {
-        request.get('http://localhost:3001/not_exists.png', (error, response, body) => {
-          if (error) return done(error);
+        request.get(
+            'http://localhost:3001/not_exists.png',
+            (error, response) => {
+              if (error) return done(error);
 
-          expect(response.statusCode).to.equal(404);
-          done();
-        });
+              expect(response.statusCode).to.equal(404);
+              done();
+            }
+        );
       });
 
       it('если путь вложенный - возвращается ошибка 400', (done) => {
-        request.get('http://localhost:3001/nested/path', (error, response, body) => {
-          if (error) return done(error);
+        request.get(
+            'http://localhost:3001/nested/path',
+            (error, response) => {
+              if (error) return done(error);
 
-          expect(response.statusCode).to.equal(400);
-          done();
-        });
+              expect(response.statusCode).to.equal(400);
+              done();
+            }
+        );
       });
     });
   });

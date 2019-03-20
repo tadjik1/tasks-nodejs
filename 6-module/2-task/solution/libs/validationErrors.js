@@ -2,21 +2,18 @@ module.exports = async function handleMongooseValidationError(ctx, next) {
   try {
     await next();
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      ctx.status = 400;
+    if (err.name !== 'ValidationError') throw err;
 
-      const errors = {};
+    ctx.status = 400;
 
-      for (let field in e.errors) {
-        errors[field] = e.errors[field].message;
-      }
+    const errors = {};
 
-      ctx.body = {
-        errors: errors,
-      };
-
-    } else {
-      throw err;
+    for (const field in err.errors) {
+      errors[field] = err.errors[field].message;
     }
+
+    ctx.body = {
+      errors: errors,
+    };
   }
 };

@@ -11,9 +11,13 @@ describe('1-module-1-task', () => {
     });
 
     it('порядок вывода совпадает', () => {
-      const solution = fs.readFileSync(path.join(__dirname, '../solution.txt'), {
-        encoding: 'utf-8',
-      });
+      const solution = fs.readFileSync(
+          path.join(__dirname, '../solution.txt'),
+          {
+            encoding: 'utf-8',
+          }
+      );
+
       const output = execSync(`node ${path.join(__dirname, '../index.js')}`, {
         encoding: 'utf-8',
       });

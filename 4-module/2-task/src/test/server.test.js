@@ -25,22 +25,25 @@ describe('4-module-1-task', () => {
     });
 
     describe('POST', () => {
-      it('возвращается ошибка 409 при попытке создания файла, который уже есть', (done) => {
+      it('возвращается ошибка 409 при создании файла, который есть', (done) => {
         fse.copyFileSync(
             path.join(fixturesFolder, 'small.png'),
             path.join(filesFolder, 'small.png'),
         );
 
         const mtime = fse.statSync(path.join(filesFolder, 'small.png')).mtime;
-        const req = request.post('http://localhost:3001/small.png', (error, response, body) => {
-          if (error) return done(error);
+        const req = request.post(
+            'http://localhost:3001/small.png',
+            (error, response, body) => {
+              if (error) return done(error);
 
-          const newMtime = fse.statSync(path.join(filesFolder, 'small.png')).mtime;
+              const newMtime = fse.statSync(path.join(filesFolder, 'small.png')).mtime;
 
-          expect(mtime).to.eql(newMtime);
-          expect(response.statusCode).to.equal(409);
-          done();
-        });
+              expect(mtime).to.eql(newMtime);
+              expect(response.statusCode).to.equal(409);
+              done();
+            }
+        );
 
         fse.createReadStream(path.join(fixturesFolder, 'small.png')).pipe(req);
       });
@@ -115,7 +118,7 @@ describe('4-module-1-task', () => {
         });
 
         req.on('response', (res) => {
-          assert.fail('there should be no response');
+          expect.fail('there should be no response');
         });
 
         req.write('content');
