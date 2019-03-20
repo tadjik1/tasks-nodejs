@@ -4,8 +4,6 @@
 Содержит теоретические материалы и практические задания.
 
 ### TODO:
-- npm run test:local module task
-- 2-module/2-task solution/readme (linesplitstream)
 - 3-module/readme (tests)
 - 5-module/readme
 - 5-module/1-task/readme (middlewares)
