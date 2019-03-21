@@ -3,10 +3,35 @@
 Задачник для курса по Node.JS на сайте https://learn.javascript.ru/courses/nodejs.
 Содержит теоретические материалы и практические задания.
 
-### TODO:
-- 3-module/readme (tests)
-- 5-module/readme
-- 5-module/1-task/readme (middlewares)
-- 6-module/readme (databases)
-- 6-module/2-task/solution/readme (missing)
-- 7-module/1-task/solution (missing)
+## Status
+
+- 0-module:     *DONE*
+    - 1-task:   *DONE*
+
+- 1-module:     *DONE*
+    - 1-task:   *DONE*
+
+- 2-module:     *DONE*
+    - 1-task:   *DONE*
+    - 2-task:   *DONE*
+
+- 3-module:
+
+- 4-module:
+    - 1-task:   *DONE*
+    - 2-task:   *DONE*
+    - 3-task:   *DONE*
+
+- 5-module:     *DONE*
+    - 1-task:   *DONE*
+
+- 6-module:     *DONE*
+    - 1-task:   *DONE*
+    - 2-task:
+    
+- 7-module:     *DONE*
+    - 1-task: 
+
+- 8-module:
+
+- 9-module:
