@@ -1,6 +1,5 @@
 const mongoose = require('../libs/mongoose');
 const crypto = require('crypto');
-const config = require('config');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -54,7 +53,7 @@ userSchema.methods.setPassword = async function setPassword(password) {
     }
   }
 
-  this.salt = crypto.randomBytes(config.get('crypto.hash.length')).toString('hex');
+  this.salt = crypto.randomBytes(10).toString('hex');
   this.passwordHash = await generatePassword(this.salt, password);
 };
 

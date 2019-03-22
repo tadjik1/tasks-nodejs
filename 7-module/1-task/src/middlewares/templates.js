@@ -18,7 +18,7 @@ module.exports = function templates(app) {
 
     ctx.render = function(templatePath, locals) {
       return pug.renderFile(
-          path.join(config.get('templatesRoot'), templatePath, '.pug'),
+          path.join(config.get('templatesRoot'), templatePath + '.pug'),
           Object.assign({}, ctx.locals, locals)
       );
     };

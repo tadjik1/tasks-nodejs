@@ -30,8 +30,10 @@
     - 2-task:
     
 - 7-module:     *DONE*
-    - 1-task: 
+    - 1-task:   *DONE*
 
 - 8-module:
 
 - 9-module:
+
+- 10-module:

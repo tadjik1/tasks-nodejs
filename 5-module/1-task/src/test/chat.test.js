@@ -1,3 +1,6 @@
+const path = require('path');
+process.env["NODE_CONFIG_DIR"] = path.join(__dirname, '../config');
+
 const request = require('request-promise');
 const app = require('../app');
 const expect = require('chai').expect;

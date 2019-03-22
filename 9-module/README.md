@@ -1,11 +1,7 @@
-# Release
+# Websockets
 
-Краткий список существующих решений:
+- https://learn.javascript.ru/websockets
 
-- CI/CD
-    - https://travis-ci.org/
-    - https://circleci.com/
-- VPS, PaaS, Clouds
-    - https://www.digitalocean.com/
-    - https://www.heroku.com/
-    - https://aws.amazon.com/
+## Socket.io
+
+- https://socket.io

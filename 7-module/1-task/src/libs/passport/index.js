@@ -1,4 +1,5 @@
 const passport = require('koa-passport');
+const mongoose = require('../mongoose');
 const User = require('../../models/User');
 
 const localStrategy = require('./strategies/local');

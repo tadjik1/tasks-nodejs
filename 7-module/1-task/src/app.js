@@ -12,8 +12,8 @@ app.use(require('./middlewares/templates')(app));
 app.use(require('./middlewares/errors')(app));
 app.use(require('./middlewares/session')(app));
 app.use(require('./middlewares/flash')(app));
-app.use(require('./middlewares/passport').initialize());
-app.use(require('./middlewares/passport').session());
+app.use(require('koa-passport').initialize());
+app.use(require('koa-passport').session());
 
 router.get('/', require('./routes/frontpage').get);
 router.post('/login', require('./routes/login').post);

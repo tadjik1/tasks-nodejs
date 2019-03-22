@@ -1,7 +1,3 @@
-# Websockets
+# Отправка почты
 
-- https://learn.javascript.ru/websockets
-
-## Socket.io
-
-- https://socket.io
+- https://nodemailer.com/about/
