@@ -29,6 +29,7 @@
     "koa-static": "^5.0.0",
     "mongoose": "^5.4.15",
     "mongoose-beautiful-unique-validation": "^7.1.1",
+    "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "sinon": "^7.2.7"
   }
