@@ -8,7 +8,7 @@ const http = require('http');
 const filesFolder = path.resolve(__dirname, '../files');
 const fixturesFolder = path.resolve(__dirname, './fixtures');
 
-describe('4-module-1-task', () => {
+describe('4-module-2-task', () => {
   describe('тесты на файловый сервер', () => {
     before((done) => {
       fse.emptyDirSync(filesFolder);
