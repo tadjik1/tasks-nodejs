@@ -34,9 +34,10 @@ describe('4-module-3-task', () => {
           if (error) return done(error);
 
           expect(response.statusCode).to.equal(200);
-          expect(fse.existsSync(path.join(filesFolder, 'small.png'))).to.be.false;
-
-          done();
+          setTimeout(() => {
+            expect(fse.existsSync(path.join(filesFolder, 'small.png'))).to.be.false;
+            done();
+          }, 100);
         });
       });
 

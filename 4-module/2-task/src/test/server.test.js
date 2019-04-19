@@ -76,10 +76,11 @@ describe('4-module-2-task', () => {
               if (error) return done(error);
 
               expect(response.statusCode).to.equal(413);
-
-              expect(fse.existsSync(path.join(filesFolder, 'big.png'))).to.be.false;
-
-              done();
+  
+              setTimeout(() => {
+                expect(fse.existsSync(path.join(filesFolder, 'big.png'))).to.be.false;
+                done();
+              }, 100);
             });
 
         req.on('error', (err) => {
@@ -113,8 +114,10 @@ describe('4-module-2-task', () => {
         req.on('error', (err) => {
           if (err.code !== 'ECONNRESET') return done(err);
 
-          expect(fse.existsSync(path.join(filesFolder, 'example.txt'))).to.be.false;
-          done();
+          setTimeout(() => {
+            expect(fse.existsSync(path.join(filesFolder, 'example.txt'))).to.be.false;
+            done();
+          }, 100);
         });
 
         req.on('response', (res) => {
