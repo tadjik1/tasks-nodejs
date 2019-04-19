@@ -15,7 +15,7 @@ router.get('/subscribe', async (ctx, next) => {
     clients.add(resolve);
 
     ctx.res.on('close', function() {
-      clients.remove(resolve);
+      clients.delete(resolve);
       resolve();
     });
   });

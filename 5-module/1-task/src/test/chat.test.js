@@ -75,6 +75,7 @@ describe('5-module-1-task', () => {
           method: 'POST',
           url: 'http://127.0.0.1:3000/publish',
           json: true,
+          simple: false,
           body: {},
         });
 
