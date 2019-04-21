@@ -5,7 +5,7 @@ const sinon = require('sinon');
 
 describe('2-module-1-task', () => {
   describe('LimitSizeStream', () => {
-    it('стрим передает данные', (done) => {
+    it('стрим передает поступающие данные без изменений', (done) => {
       const limitStream = new LimitSizeStream({limit: 3, encoding: 'utf-8'});
 
       const onData = sinon.spy();

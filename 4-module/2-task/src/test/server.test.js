@@ -39,8 +39,8 @@ describe('4-module-2-task', () => {
 
               const newMtime = fse.statSync(path.join(filesFolder, 'small.png')).mtime;
 
-              expect(mtime).to.eql(newMtime);
-              expect(response.statusCode).to.equal(409);
+              expect(mtime, 'файл не должен перезаписываться').to.eql(newMtime);
+              expect(response.statusCode, 'статус код ответа 409').to.equal(409);
               done();
             }
         );
@@ -61,8 +61,8 @@ describe('4-module-2-task', () => {
 
           const newMtime = fse.statSync(path.join(filesFolder, 'small.png')).mtime;
 
-          expect(mtime).to.eql(newMtime);
-          expect(response.statusCode).to.equal(409);
+          expect(mtime, 'файл не должен перезаписываться').to.eql(newMtime);
+          expect(response.statusCode, 'статус код ответа сервера 409').to.equal(409);
           done();
         });
 
@@ -75,10 +75,16 @@ describe('4-module-2-task', () => {
             (error, response, body) => {
               if (error) return done(error);
 
-              expect(response.statusCode).to.equal(413);
+              expect(
+                response.statusCode,
+                'статус код ответа сервера 413'
+              ).to.equal(413);
   
               setTimeout(() => {
-                expect(fse.existsSync(path.join(filesFolder, 'big.png'))).to.be.false;
+                expect(
+                  fse.existsSync(path.join(filesFolder, 'big.png')),
+                  'файл big.png не должен оставаться на диске'
+                ).to.be.false;
                 done();
               }, 100);
             });
@@ -96,9 +102,15 @@ describe('4-module-2-task', () => {
         const req = request.post('http://localhost:3001/small.png', (error, response, body) => {
           if (error) return done(error);
 
-          expect(response.statusCode).to.equal(201);
+          expect(
+            response.statusCode,
+            'статус код ответа сервера 201'
+          ).to.equal(201);
 
-          expect(fse.existsSync(path.join(filesFolder, 'small.png'))).to.be.true;
+          expect(
+            fse.existsSync(path.join(filesFolder, 'small.png')),
+            'файл small.png должен быть на диске'
+          ).to.be.true;
           done();
         });
 
@@ -115,7 +127,11 @@ describe('4-module-2-task', () => {
           if (err.code !== 'ECONNRESET') return done(err);
 
           setTimeout(() => {
-            expect(fse.existsSync(path.join(filesFolder, 'example.txt'))).to.be.false;
+            expect(
+              fse.existsSync(path.join(filesFolder, 'example.txt')),
+              'файл example.txt не должен оставаться на диске'
+            ).to.be.false;
+
             done();
           }, 100);
         });

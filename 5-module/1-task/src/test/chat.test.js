@@ -49,7 +49,7 @@ describe('5-module-1-task', () => {
         const messages = await subscribers;
 
         messages.forEach((msg) => {
-          expect(msg).to.equal(message);
+          expect(msg, 'каждый подписчик должен получить исходное сообщение').to.equal(message);
         });
       });
 

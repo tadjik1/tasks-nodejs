@@ -1,9 +1,9 @@
 module.exports = [{
-  email: 'example1@home.ru',
-  displayName: 'example1',
-  password: '123456',
+  email: 'user1@mail.com',
+  displayName: 'user1',
+  password: '123123'
 }, {
-  email: 'example2@home.ru',
-  displayName: 'example2',
-  password: '123456',
+  email: 'user2@mail.com',
+  displayName: 'user2',
+  password: '123123'
 }];

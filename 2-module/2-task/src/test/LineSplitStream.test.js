@@ -23,7 +23,7 @@ describe('2-module-2-task', () => {
       lines.end();
     });
 
-    it('стрим корректно обрабатывает конец строки', (done) => {
+    it('стрим корректно передает данные даже если чанк не завершается переводом строки', (done) => {
       const lines = new LineSplitStream({encoding: 'utf-8'});
 
       const onData = sinon.spy();

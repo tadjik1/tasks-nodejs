@@ -35,8 +35,11 @@ describe('4-module-1-task', () => {
         request.get('http://localhost:3001/index.js', (err, response, body) => {
           if (err) return done(err);
 
-          expect(response.statusCode).to.equal(200);
-          expect(body).to.equal(content.toString('utf-8'));
+          expect(response.statusCode, 'статус код ответа 200').to.equal(200);
+          expect(
+            body,
+            'ответ сервера - исходный файл index.js'
+          ).to.equal(content.toString('utf-8'));
           done();
         });
       });

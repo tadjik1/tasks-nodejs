@@ -34,14 +34,15 @@ describe('6-module-2-task', () => {
       server = app.listen(3000, done);
     });
 
-    after((done) => {
+    after(async () => {
+      await User.deleteMany({});
       mongoose.disconnect();
-      server.close(done);
+      server.close();
     });
 
     beforeEach(async function() {
       // load fixtures
-      await User.remove({});
+      await User.deleteMany({});
       existingUser = await User.create(existingUserData);
     });
 
@@ -174,7 +175,7 @@ describe('6-module-2-task', () => {
         expect(user).to.be.null;
       });
 
-      it('возвращает статус 404 если пользователя нет при удалении пользователя', async function() {
+      it('возвращает статус 404 если пользователя нет при удалении', async function() {
         const response = await request.del(getURL('/users/55b693486e02c26010ef0000'));
         expect(response.statusCode).to.equal(404);
       });
@@ -186,7 +187,6 @@ describe('6-module-2-task', () => {
       expect(response.statusCode).to.equal(200);
       expect(response.body.length).to.equal(1);
       expect(response.body[0]._id).to.equal(existingUser.id);
-      expect(/application\/json/.test(response.headers['content-type'])).to.be.true;
     });
   });
 });

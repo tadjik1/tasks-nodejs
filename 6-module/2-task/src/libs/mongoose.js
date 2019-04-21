@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const beautifyUnique = require('mongoose-beautiful-unique-validation');
 const config = require('config');
 
-mongoose.set('debug', config.get('mongodb.debug'));
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+
 mongoose.plugin(beautifyUnique);
 mongoose.connect(config.get('mongodb.uri'));
 

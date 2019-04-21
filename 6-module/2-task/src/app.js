@@ -3,7 +3,7 @@ const Router = require('koa-router');
 
 const app = new Koa();
 
-app.use(require('koa-logger')());
+app.use(require('koa-static')('public'));
 app.use(require('koa-bodyparser')());
 
 app.use(async (ctx, next) => {
@@ -12,12 +12,10 @@ app.use(async (ctx, next) => {
   } catch (err) {
     if (err.status) {
       ctx.status = err.status;
-      ctx.body = err.message;
+      ctx.body = { message: err.message };
     } else {
-      console.error(err);
-
       ctx.status = 500;
-      ctx.body = 'Internal server error';
+      ctx.body = { message: 'Internal server error' };
     }
   }
 });
