@@ -83,4 +83,32 @@ await User.create({email: 'email@mail.com', name: 'user'});
 пользователя могут находиться в коллекции `goods`. Реализуется это с помощью указания хранимому полю
 типа `ObjectId`, а также названия модели соответствующей сущности `ref`. Замена таких полей 
 полноценными документами из базы данных выполняется с помощью метода `.populate()`. Более подбробно
-об этом можно почитать в [официальной документации](https://mongoosejs.com/docs/populate.html). 
+об этом можно почитать в [официальной документации](https://mongoosejs.com/docs/populate.html).
+Пример объявления модели `User`, у которой поле `friends` будет содержать список идентификаторов
+других пользователей - друзей данного.
+```js
+const schema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: 'E-mail пользователя не должен быть пустым.',
+    validate: [
+      {
+        validator(value) {
+          return /^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(value);
+        },
+        message: 'Некорректный email.',
+      },
+    ],
+    unique: 'Такой email уже существует',
+  },
+  displayName: {
+    type: String,
+    required: 'У пользователя должно быть имя',
+    unique: 'Такое имя уже существует',
+  },
+  friends: [{
+    type: mongoose.Types.ObjectId,
+    ref: 'User'
+  }]
+});
+``` 

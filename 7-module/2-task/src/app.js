@@ -3,6 +3,7 @@ const path = require('path');
 const Koa = require('koa');
 const uuid = require('uuid/v4');
 const Router = require('koa-router');
+const config = require('config');
 const passport = require('./libs/passport');
 
 const app = new Koa();
@@ -18,6 +19,7 @@ app.use(async (ctx, next) => {
       ctx.status = err.status;
       ctx.body = { error: err.message };
     } else {
+      console.error(err);
       ctx.status = 500;
       ctx.body = { error: 'Internal server error' };
     }
@@ -36,6 +38,36 @@ router.post('/login', async (ctx, next) => {
       return;
     }
   
+    const token = uuid();
+    
+    ctx.body = { token };
+  })(ctx, next);
+});
+
+router.post('/oauth', async (ctx, next) => {
+  const provider = ctx.request.body.provider;
+  
+  await passport.authenticate(
+    provider,
+    config.get(`providers.${provider}.options`),
+  )(ctx, next);
+  
+  ctx.status = 200;
+  ctx.body = { status: 'ok', location: ctx.response.get('location') };
+});
+
+router.post('/oauth_callback', async (ctx, next) => {
+  const provider = ctx.request.body.provider;
+  
+  await passport.authenticate(provider, async (err, user, info) => {
+    if (err) throw err;
+    
+    if (!user) {
+      ctx.status = 400;
+      ctx.body = { error: info };
+      return;
+    }
+    
     const token = uuid();
     
     ctx.body = { token };
