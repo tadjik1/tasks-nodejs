@@ -5,6 +5,7 @@ const uuid = require('uuid/v4');
 const Router = require('koa-router');
 const config = require('config');
 const passport = require('./libs/passport');
+const handleMongooseValidationError = require('./libs/validationErrors');
 
 const app = new Koa();
 
@@ -56,7 +57,7 @@ router.post('/oauth', async (ctx, next) => {
   ctx.body = { status: 'ok', location: ctx.response.get('location') };
 });
 
-router.post('/oauth_callback', async (ctx, next) => {
+router.post('/oauth_callback', handleMongooseValidationError, async (ctx, next) => {
   const provider = ctx.request.body.provider;
   
   await passport.authenticate(provider, async (err, user, info) => {

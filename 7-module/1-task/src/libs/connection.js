@@ -7,6 +7,5 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
 mongoose.plugin(beautifyUnique);
-mongoose.connect(config.get('mongodb.uri'));
 
-module.exports = mongoose;
+module.exports = mongoose.createConnection(config.get('mongodb.uri'));

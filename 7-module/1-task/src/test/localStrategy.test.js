@@ -1,7 +1,7 @@
 const path = require('path');
 process.env["NODE_CONFIG_DIR"] = path.join(__dirname, '../config');
 
-const mongoose = require('../libs/mongoose');
+const connection = require('../libs/connection');
 const localStrategy = require('../libs/strategies/local');
 const expect = require('chai').expect;
 const User = require('../models/User');
@@ -21,7 +21,7 @@ describe('7-module-1-task', () => {
     
     after(async () => {
       await User.deleteMany({});
-      mongoose.disconnect();
+      connection.disconnect();
     });
     
     it('поле usernameField должно должно содержать email', () => {

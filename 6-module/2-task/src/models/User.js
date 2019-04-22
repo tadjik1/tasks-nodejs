@@ -1,4 +1,5 @@
-const mongoose = require('../libs/mongoose');
+const mongoose = require('mongoose');
+const connection = require('../libs/connection');
 
 const schema = new mongoose.Schema({
   email: {
@@ -24,4 +25,4 @@ const schema = new mongoose.Schema({
   timestamps: true,
 });
 
-module.exports = mongoose.model('User', schema);
+module.exports = connection.model('User', schema);
