@@ -1,7 +1,7 @@
 const path = require('path');
 process.env["NODE_CONFIG_DIR"] = path.join(__dirname, '../config');
 
-const connection = require('../libs/connection');
+const mongoose = require('mongoose');
 const authenticate = require('../libs/strategies/authenticate');
 const expect = require('chai').expect;
 const User = require('../models/User');
@@ -21,7 +21,7 @@ describe('7-module-2-task', () => {
     
     after(async () => {
       await User.deleteMany({});
-      connection.disconnect();
+      mongoose.disconnect();
     });
     
     it('функция authenticate должна возвращать ошибку, если email не передаётся', (done) => {

@@ -8,7 +8,7 @@ const request = require('request-promise').defaults({
 });
 
 const expect = require('chai').expect;
-const connection = require('../libs/connection');
+const mongoose = require('mongoose');
 
 const User = require('../models/User');
 const app = require('../app');
@@ -36,7 +36,7 @@ describe('6-module-2-task', () => {
 
     after(async () => {
       await User.deleteMany({});
-      connection.disconnect();
+      mongoose.disconnect();
       server.close();
     });
 
