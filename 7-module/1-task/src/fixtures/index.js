@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const mongoose = require('../libs/mongoose');
+const mongoose = require('mongoose');
 const users = require('./users');
 
 (async () => {
