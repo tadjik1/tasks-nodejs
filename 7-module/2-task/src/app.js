@@ -45,8 +45,8 @@ router.post('/login', async (ctx, next) => {
   })(ctx, next);
 });
 
-router.post('/oauth', async (ctx, next) => {
-  const provider = ctx.request.body.provider;
+router.get('/oauth/:provider', async (ctx, next) => {
+  const provider = ctx.params.provider;
   
   await passport.authenticate(
     provider,
