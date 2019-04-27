@@ -53,5 +53,5 @@
 
 Похожим образом выполняется регистрация приложения в любой социальной сети, текущий клиент имеет 
 кнопки для аутентификации через vkontakte и facebook, использовать их вы можете уже сейчас, 
-`callback url` для vkontakte должен быть `http://localhost:3000/oauth/github`, для facebook - 
+`callback url` для vkontakte должен быть `http://localhost:3000/oauth/vkontakte`, для facebook - 
 `http://localhost:3000/oauth/facebook`.
