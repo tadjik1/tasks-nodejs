@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const users = require('./users');
 
 (async () => {
-  await User.remove();
+  await User.deleteMany();
   
   for (let user of users) {
     const u = new User(user);
