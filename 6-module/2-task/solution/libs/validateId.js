@@ -1,4 +1,4 @@
-const mongoose = require('./mongoose');
+const mongoose = require('mongoose');
 
 module.exports = function validateId(ctx, next) {
   const id = ctx.params.id;
