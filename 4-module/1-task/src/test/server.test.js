@@ -37,8 +37,8 @@ describe('4-module-1-task', () => {
 
           expect(response.statusCode, 'статус код ответа 200').to.equal(200);
           expect(
-            body,
-            'ответ сервера - исходный файл index.js'
+              body,
+              'ответ сервера - исходный файл index.js'
           ).to.equal(content.toString('utf-8'));
           done();
         });

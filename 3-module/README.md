@@ -9,7 +9,6 @@
 
 ## Конфигурирование
 
-- http://lorenwest.github.io/node-config
 - https://github.com/motdotla/dotenv
 
 ## Логирование

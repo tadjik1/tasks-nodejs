@@ -36,8 +36,8 @@ describe('4-module-3-task', () => {
           expect(response.statusCode).to.equal(200);
           setTimeout(() => {
             expect(
-              fse.existsSync(path.join(filesFolder, 'small.png')),
-              'файл small.png не должен оставаться на диске'
+                fse.existsSync(path.join(filesFolder, 'small.png')),
+                'файл small.png не должен оставаться на диске'
             ).to.be.false;
             done();
           }, 100);

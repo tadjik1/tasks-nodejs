@@ -76,14 +76,14 @@ describe('4-module-2-task', () => {
               if (error) return done(error);
 
               expect(
-                response.statusCode,
-                'статус код ответа сервера 413'
+                  response.statusCode,
+                  'статус код ответа сервера 413'
               ).to.equal(413);
-  
+
               setTimeout(() => {
                 expect(
-                  fse.existsSync(path.join(filesFolder, 'big.png')),
-                  'файл big.png не должен оставаться на диске'
+                    fse.existsSync(path.join(filesFolder, 'big.png')),
+                    'файл big.png не должен оставаться на диске'
                 ).to.be.false;
                 done();
               }, 100);
@@ -103,13 +103,13 @@ describe('4-module-2-task', () => {
           if (error) return done(error);
 
           expect(
-            response.statusCode,
-            'статус код ответа сервера 201'
+              response.statusCode,
+              'статус код ответа сервера 201'
           ).to.equal(201);
 
           expect(
-            fse.existsSync(path.join(filesFolder, 'small.png')),
-            'файл small.png должен быть на диске'
+              fse.existsSync(path.join(filesFolder, 'small.png')),
+              'файл small.png должен быть на диске'
           ).to.be.true;
           done();
         });
@@ -128,8 +128,8 @@ describe('4-module-2-task', () => {
 
           setTimeout(() => {
             expect(
-              fse.existsSync(path.join(filesFolder, 'example.txt')),
-              'файл example.txt не должен оставаться на диске'
+                fse.existsSync(path.join(filesFolder, 'example.txt')),
+                'файл example.txt не должен оставаться на диске'
             ).to.be.false;
 
             done();
