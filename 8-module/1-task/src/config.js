@@ -1,6 +1,6 @@
 module.exports = {
   mongodb: {
-    uri: 'mongodb://localhost/chat_app',
+    uri: 'mongodb://localhost/8-module-1-task',
   },
   providers: {
     github: {

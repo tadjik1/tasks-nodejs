@@ -24,6 +24,21 @@ const transport = nodemailer.createTransport(transportEngine);
 
 transport.use('compile', htmlToText());
 
+/*
+* sendMail - функция, отправляющая письмо на указанный адрес
+* options - объект, содержащий опции для отправки писем:
+* options.template - имя файла, содержащего шаблон письма
+* options.locals - объект с переменными, которые будут переданы в шаблон
+* options.to - email, на который будет отправлено письмо
+* options.subject - тема письма
+* пример:
+*     await sendMail({
+*       template: 'confirmation',
+*       locals: {token: 'token'},
+*       to: 'user@mail.com',
+*       subject: 'Подтвердите почту',
+*     });
+* */
 module.exports = async function sendMail(options) {
   const html = pug.renderFile(
       path.join(__dirname, '../templates', options.template) + '.pug',
@@ -40,3 +55,5 @@ module.exports = async function sendMail(options) {
 
   return await transport.sendMail(message);
 };
+
+module.exports.transportEngine = transportEngine;

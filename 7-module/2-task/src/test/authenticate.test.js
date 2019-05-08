@@ -5,7 +5,7 @@ const User = require('../models/User');
 const users = require('../fixtures/users');
 
 describe('7-module-2-task', () => {
-  describe('authenticate function', function() {
+  describe('функция аутентификации', function() {
     before(async () => {
       await User.deleteMany();
 

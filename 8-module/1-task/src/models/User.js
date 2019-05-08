@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
   },
   verificationToken: {
     type: String,
-    unique: true,
+    index: true,
   },
   passwordHash: {
     type: String,

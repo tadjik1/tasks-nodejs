@@ -1,5 +1,5 @@
 module.exports = {
   mongodb: {
-    uri: 'mongodb://localhost/chat_app',
+    uri: 'mongodb://localhost/7-module-1-task',
   },
 };
