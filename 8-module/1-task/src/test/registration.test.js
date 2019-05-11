@@ -11,7 +11,7 @@ const expect = require('chai').expect;
 const get = require('lodash/get');
 
 describe('8-module-1-task', () => {
-  describe('authenticate function', function() {
+  describe('регистрация', function() {
     let server;
     before((done) => {
       server = app.listen(3000, done);
