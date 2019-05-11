@@ -89,10 +89,5 @@ module.exports = function mustBeAuthenticated(ctx, next) {
 формировать цепочку обработки конкретного запроса, перечисляя middleware через запятую. Таким 
 образом, у нас получится следующий код:
 ```js
-router.get('/me', mustBeAuthenticated, async (ctx) => {
-  ctx.body = {
-    email: ctx.user.email,
-    displayName: ctx.user.displayName,
-  };
-});
+router.get('/me', mustBeAuthenticated, require('./controllers/me'));
 ``` 

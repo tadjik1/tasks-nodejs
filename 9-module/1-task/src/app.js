@@ -3,12 +3,8 @@ const path = require('path');
 const Koa = require('koa');
 const uuid = require('uuid/v4');
 const Router = require('koa-router');
-const config = require('./config');
-const passport = require('./libs/passport');
 const handleMongooseValidationError = require('./libs/validationErrors');
-const User = require('./models/User');
 const Session = require('./models/Session');
-const sendMail = require('./libs/sendMail');
 const mustBeAuthenticated = require('./libs/mustBeAuthenticated');
 
 const app = new Koa();
@@ -50,96 +46,13 @@ router.use(async (ctx, next) => {
   return next();
 });
 
-router.post('/login', async (ctx, next) => {
-  await passport.authenticate('local', async (err, user, info) => {
-    if (err) throw err;
-    
-    if (!user) {
-      ctx.status = 400;
-      ctx.body = {error: info};
-      return;
-    }
+router.post('/login', require('./controllers/login'));
+router.get('/oauth/:provider', require('./controllers/oauth').oauth);
+router.post('/oauth_callback', handleMongooseValidationError, require('./controllers/oauth').oauthCallback);
+router.post('/register', handleMongooseValidationError, require('./controllers/register'));
+router.post('/confirm', require('./controllers/confirm'));
 
-    const token = await ctx.login(user);
-    
-    ctx.body = {token};
-  })(ctx, next);
-});
-
-router.get('/oauth/:provider', async (ctx, next) => {
-  const provider = ctx.params.provider;
-  
-  await passport.authenticate(
-    provider,
-    config.providers[provider].options,
-  )(ctx, next);
-  
-  ctx.status = 200;
-  ctx.body = {status: 'ok', location: ctx.response.get('location')};
-});
-
-router.post('/oauth_callback', handleMongooseValidationError, async (ctx, next) => {
-  const provider = ctx.request.body.provider;
-  
-  await passport.authenticate(provider, async (err, user, info) => {
-    if (err) throw err;
-    
-    if (!user) {
-      ctx.status = 400;
-      ctx.body = {error: info};
-      return;
-    }
-  
-    const token = await ctx.login(user);
-    
-    ctx.body = {token};
-  })(ctx, next);
-});
-
-router.post('/register', handleMongooseValidationError, async (ctx, next) => {
-  const verificationToken = uuid();
-  const user = new User({
-    email: ctx.request.body.email,
-    displayName: ctx.request.body.displayName,
-    verificationToken,
-  });
-  
-  await user.setPassword(ctx.request.body.password);
-  await user.save();
-  
-  await sendMail({
-    to: user.email,
-    subject: 'Подтвердите почту',
-    locals: {token: verificationToken},
-    template: 'confirmation',
-  });
-  
-  ctx.body = {status: 'ok'};
-});
-
-router.post('/confirm', async (ctx) => {
-  const user = await User.findOne({
-    verificationToken: ctx.request.body.verificationToken,
-  });
-  
-  if (!user) {
-    ctx.throw(400, 'Ссылка подтверждения недействительна или устарела');
-  }
-  
-  user.verificationToken = undefined;
-  await user.save();
-  
-  const token = await ctx.login(user);
-  
-  ctx.body = {token};
-});
-
-router.get('/me', async (ctx) => {
-  ctx.body = {
-    email: ctx.user.email,
-    displayName: ctx.user.displayName,
-  };
-});
+router.get('/me', require('./controllers/me'));
 
 app.use(router.routes());
 
