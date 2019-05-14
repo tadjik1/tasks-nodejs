@@ -4,7 +4,7 @@
   "description": "Node.JS Course Materials",
   "scripts": {
     "test": "NODE_ENV=test mocha --reporter=reporter.js *module/*task/**/*.test.js",
-    "test:local": "NODE_ENV=test node local.js",
+    "test:local": "node local.js",
     "lint": "eslint ."
   },
   "keywords": [],
