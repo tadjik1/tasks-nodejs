@@ -1,6 +1,6 @@
 module.exports = {
   mongodb: {
-    uri: 'mongodb://localhost/9-module-1-task',
+    uri: 'mongodb://localhost/9-module-2-task',
   },
   providers: {
     github: {
