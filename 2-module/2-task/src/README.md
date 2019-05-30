@@ -14,7 +14,7 @@ const LineSplitStream = require('./LineSplitStream');
 const os = require('os');
 
 const lines = new LineSplitStream({
-  encoding: 'utf-8,'
+  encoding: 'utf-8',
 });
 
 function onData(line) {
