@@ -30,15 +30,18 @@ describe('2-module-2-task', () => {
 
       lines.on('data', onData);
       lines.on('end', () => {
-        expect(onData.calledTwice).to.be.true;
+        expect(onData.calledThrice).to.be.true;
         expect(onData.firstCall.args[0]).to.equal('ab');
-        expect(onData.secondCall.args[0]).to.equal('c');
+        expect(onData.secondCall.args[0]).to.equal('cd');
+        expect(onData.thirdCall.args[0]).to.equal('ef');
 
         done();
       });
 
       lines.write('a');
       lines.write(`b${os.EOL}c`);
+      lines.write(`d${os.EOL}e`);
+      lines.write('f');
 
       lines.end();
     });

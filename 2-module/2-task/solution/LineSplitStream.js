@@ -18,7 +18,7 @@ class LineSplitStream extends stream.Transform {
       this.push(line);
     }
 
-    if (lastLine.endsWith(os.EOL)) {
+    if (str.endsWith(os.EOL)) {
       this.push(lastLine);
     } else {
       this.remainder = lastLine;
