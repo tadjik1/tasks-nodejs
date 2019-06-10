@@ -90,8 +90,8 @@ describe('4-module-2-task', () => {
             });
 
         req.on('error', (err) => {
-          // EPIPE error should occur because we try to pipe after res closed
-          if (err.code !== 'EPIPE') done(err);
+          // EPIPE/ECONNRESET error should occur because we try to pipe after res closed
+          if (!['ECONNRESET', 'EPIPE'].includes(err.code)) done(err);
         });
 
         fse.createReadStream(path.join(fixturesFolder, 'big.png'))
