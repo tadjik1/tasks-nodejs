@@ -33,7 +33,7 @@ app.use((ctx, next) => {
 
     return token;
   };
-  
+
   return next();
 });
 

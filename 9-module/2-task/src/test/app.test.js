@@ -21,14 +21,14 @@ describe('9-module-2-task', () => {
       _socket = socket(require('http').createServer().listen(3000));
       _server = app.listen(3001, done);
     });
-    
+
     beforeEach(async () => {
       await User.deleteMany({});
       await Session.deleteMany({});
       await Message.deleteMany({});
       client && client.disconnect();
     });
-    
+
     after(async () => {
       await User.deleteMany({});
       await Session.deleteMany({});
@@ -38,7 +38,7 @@ describe('9-module-2-task', () => {
       _socket.close();
       _server.close();
     });
-  
+
     it('получение списка сообщений', async () => {
       const userData = {
         email: 'user@mail.com',
@@ -48,48 +48,48 @@ describe('9-module-2-task', () => {
       const u = new User(userData);
       await u.setPassword(userData.password);
       await u.save();
-    
+
       const d = new Date();
       await Session.create({token: 'token', user: u, lastVisit: new Date()});
       const message = await Message.create({user: u, text: 'message', date: d});
-    
+
       const response = await request({
         method: 'get',
         uri: 'http://localhost:3001/api/messages',
         headers: {
-          'Authorization': 'Bearer token'
-        }
+          'Authorization': 'Bearer token',
+        },
       });
-    
+
       expect(response.body).to.eql({
         messages: [{
           id: message.id,
           date: d.toISOString(),
           text: 'message',
-          user: 'user'
-        }]
+          user: 'user',
+        }],
       });
     });
-  
+
     it('незалогиненный пользователь не может сделать запрос на /messages', async () => {
       const response = await request({
         method: 'get',
         uri: 'http://localhost:3001/api/messages',
       });
-    
+
       expect(response.statusCode).to.equal(401);
       expect(response.body.error).to.equal('Пользователь не залогинен');
     });
 
     it('неаутентифицированный клиент не может подключиться по вебсокету', (done) => {
       client = io('http://localhost:3000');
-  
-      client.on('error', err => {
+
+      client.on('error', (err) => {
         expect(err).to.equal('anonymous sessions are not allowed');
         done();
       });
     });
-  
+
     it('аутентифицированный клиент может подключиться по вебсокету', async () => {
       const userData = {
         email: 'user@mail.com',
@@ -101,17 +101,19 @@ describe('9-module-2-task', () => {
       await u.save();
 
       await Session.create({token: 'token', user: u, lastVisit: new Date()});
-  
+
       client = io('http://localhost:3000?token=token');
       let resolve;
-      const promise = new Promise((_resolve) => { resolve = _resolve; });
-  
+      const promise = new Promise((_resolve) => {
+        resolve = _resolve;
+      });
+
       client.on('connect', () => {
         resolve();
       });
       return promise;
     });
-  
+
     it('сообщения от пользователей пересылаются всем', async () => {
       const userData = {
         email: 'user@mail.com',
@@ -121,13 +123,15 @@ describe('9-module-2-task', () => {
       const u = new User(userData);
       await u.setPassword(userData.password);
       await u.save();
-    
+
       await Session.create({token: 'token', user: u, lastVisit: new Date()});
-    
+
       client = io('http://localhost:3000?token=token');
       let resolve;
-      const promise = new Promise((_resolve) => { resolve = _resolve; });
-    
+      const promise = new Promise((_resolve) => {
+        resolve = _resolve;
+      });
+
       client.on('connect', () => {
         client.emit('message', 'hi');
       });
@@ -139,7 +143,7 @@ describe('9-module-2-task', () => {
       });
       return promise;
     });
-  
+
     it('сообщения от пользователей сохраняются в базе данных', async () => {
       const userData = {
         email: 'user@mail.com',
@@ -149,25 +153,27 @@ describe('9-module-2-task', () => {
       const u = new User(userData);
       await u.setPassword(userData.password);
       await u.save();
-    
+
       await Session.create({token: 'token', user: u, lastVisit: new Date()});
-    
+
       client = io('http://localhost:3000?token=token');
       let resolve;
-      const promise = new Promise((_resolve) => { resolve = _resolve; });
-    
+      const promise = new Promise((_resolve) => {
+        resolve = _resolve;
+      });
+
       client.on('connect', () => {
         client.emit('message', 'hi');
-        
+
         setTimeout(async () => {
           const message = await Message.findOne();
           expect(message.text).to.equal('hi');
           expect(message.user.toString()).to.equal(u.id);
-          
+
           resolve();
         }, 300);
       });
-      
+
       return promise;
     });
   });

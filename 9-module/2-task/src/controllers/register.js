@@ -9,16 +9,16 @@ module.exports = async function register(ctx, next) {
     displayName: ctx.request.body.displayName,
     verificationToken,
   });
-  
+
   await user.setPassword(ctx.request.body.password);
   await user.save();
-  
+
   await sendMail({
     to: user.email,
     subject: 'Подтвердите почту',
     locals: {token: verificationToken},
     template: 'confirmation',
   });
-  
+
   ctx.body = {status: 'ok'};
 };

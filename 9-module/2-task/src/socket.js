@@ -5,15 +5,15 @@ const Message = require('./models/Message');
 
 function socket(server) {
   const io = socketIO(server);
-  
+
   io.use(async function(socket, next) {
     next();
   });
 
-  io.on('connection', function (socket) {
+  io.on('connection', function(socket) {
     socket.on('message', (msg) => {});
   });
-  
+
   return io;
 }
 

@@ -15,7 +15,7 @@ const schema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     required: true,
     ref: 'User',
-  }
+  },
 });
 
 schema.path('lastVisit').index({expires: '7d'});

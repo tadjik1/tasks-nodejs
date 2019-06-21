@@ -7,17 +7,17 @@ const messageSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  
+
   text: {
     type: String,
     required: true,
   },
-  
+
   date: {
     type: Date,
     required: true,
-  }
-  
+  },
+
 });
 
 module.exports = connection.model('Message', messageSchema);
